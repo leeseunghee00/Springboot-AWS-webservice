@@ -20,6 +20,10 @@ public class PostsService {
                 getId();
     }
 
+    /**
+     * DB에 쿼리를 날리지 않아도 되는 이유 ? JPA의 영속성 컨텍스트 때문 !
+     * 영속성 컨텍스트란, 엔티티를 영구 저장하는 환경을 말한다.
+     */
     @Transactional
     public Long update(Long id, PostsUpdateRequestDto requestDto) {
         Posts posts = postsRepository.findById(id)
