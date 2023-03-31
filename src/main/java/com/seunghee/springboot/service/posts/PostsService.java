@@ -2,12 +2,16 @@ package com.seunghee.springboot.service.posts;
 
 import com.seunghee.springboot.domain.posts.Posts;
 import com.seunghee.springboot.domain.posts.PostsRepository;
+import com.seunghee.springboot.web.dto.PostsListResponseDto;
 import com.seunghee.springboot.web.dto.PostsResponseDto;
 import com.seunghee.springboot.web.dto.PostsSaveRequestDto;
 import com.seunghee.springboot.web.dto.PostsUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor    //기본 생성자를 생성한다.
 @Service
@@ -40,5 +44,17 @@ public class PostsService {
                         IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
 
         return new PostsResponseDto(entity);
+    }
+
+    @Transactional(readOnly = true)     //조회 기능만 가능 -> 조회 속도가 개선되기 때문에 조회 서비스만 사용할 때 사용하는 것이 좋다.
+    public List<PostsListResponseDto> findALlDsec() {
+        /**
+         * postsRepository 결과로 넘어온 Posts의 stream을
+         * map을 통해 PostsListResponseDto 변환 (= .map(posts -> new PostsListResponseDto(posts)))
+         * List로 반환하는 메소드
+         */
+        return postsRepository.findAllDesc().stream()
+                .map(PostsListResponseDto::new)
+                .collect(Collectors.toList());
     }
 }
