@@ -5,3 +5,6 @@
 build
 
 .idea
+
+# Ignore Google clientId and clientSecret
+application-oauth.properties
