@@ -28,6 +28,9 @@ dependencies {
 
     implementation('org.springframework.boot:spring-boot-devtools')
 
+    // spring security
+    implementation('org.springframework.boot:spring-boot-starter-oauth2-client')
+
     testImplementation('org.springframework.boot:spring-boot-starter-test')
     testImplementation('org.junit.vintage:junit-vintage-engine') {
         exclude group: 'org.hamcrest', module: 'hamcrest-core'
