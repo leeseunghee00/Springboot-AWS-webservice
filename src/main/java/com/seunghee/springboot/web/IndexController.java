@@ -1,5 +1,6 @@
 package com.seunghee.springboot.web;
 
+import com.seunghee.springboot.config.auth.LoginUser;
 import com.seunghee.springboot.config.auth.dto.SessionUser;
 import com.seunghee.springboot.service.posts.PostsService;
 import com.seunghee.springboot.web.dto.PostsResponseDto;
@@ -18,10 +19,12 @@ public class IndexController {
     private final HttpSession httpSession;
 
     @GetMapping("/")
-    public String index(Model model) {  //Model = 서버 템플릿에서 사용할 수 잇는 객체를 저장할 수 있다.
+    public String index(Model model, @LoginUser SessionUser user) {
+        //Model = 서버 템플릿에서 사용할 수 있는 객체를 저장할 수 있다.
+        //@LoginUser SessionUser user = 기존에 (User) httpSession.getAttribute("user")로 가져오던 세션 정보 값이 개선되었다.
         model.addAttribute("posts", postsService.findALlDsec());
 
-        SessionUser user = (SessionUser) httpSession.getAttribute("user");
+//        SessionUser user = (SessionUser) httpSession.getAttribute("user");
 
         if (user != null) {
             model.addAttribute("userName", user.getName());
